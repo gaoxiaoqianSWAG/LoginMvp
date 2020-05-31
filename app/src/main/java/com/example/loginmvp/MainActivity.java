@@ -25,7 +25,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_main);
         initView();
         presenter = new ImpLoginPresenter(this);
-
+        //我的注释
     }
 
     private void initView() {
