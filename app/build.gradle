@@ -1,0 +1,40 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 29
+    buildToolsVersion "29.0.3"
+    defaultConfig {
+        applicationId "com.example.loginmvp"
+        minSdkVersion 22
+        targetSdkVersion 29
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation 'androidx.appcompat:appcompat:1.1.0'
+    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'androidx.test:runner:1.2.0'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+
+
+
+    //RxJava依赖库
+    implementation 'io.reactivex.rxjava2:rxjava:2.2.4'//rxjava自己的依赖
+    implementation 'io.reactivex.rxjava2:rxandroid:2.1.0'//针对android的依赖
+    implementation 'com.squareup.retrofit2:retrofit:2.5.0'//retrofit 库
+    implementation 'com.squareup.retrofit2:converter-gson:2.5.0'//数据解析器依赖(不用new gson)
+    implementation 'com.squareup.retrofit2:adapter-rxjava2:2.5.0'//网络适配器,retrofit和rxjava结合使用
+
+
+}
