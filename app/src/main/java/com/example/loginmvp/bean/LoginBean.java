@@ -8,6 +8,7 @@ public class LoginBean {
      * errorCode : 0
      * errorMsg :
      */
+
     private DataBean data;
     private int errorCode;
     private String errorMsg;
@@ -15,12 +16,15 @@ public class LoginBean {
     public DataBean getData() {
         return data;
     }
+
     public void setData(DataBean data) {
         this.data = data;
     }
+
     public int getErrorCode() {
         return errorCode;
     }
+
     public void setErrorCode(int errorCode) {
         this.errorCode = errorCode;
     }

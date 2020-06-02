@@ -1,22 +1,38 @@
 package com.example.loginmvp.model;
 
 import com.example.loginmvp.api.ApiSercice;
+import com.example.loginmvp.base.BaseModel;
+
+import com.example.loginmvp.base.BaseObserver;
 import com.example.loginmvp.bean.LoginBean;
 import com.example.loginmvp.callback.LoginCallback;
+import com.example.loginmvp.utils.HttpManager;
+import com.example.loginmvp.utils.RxUtil;
 
-import io.reactivex.Observable;
-import io.reactivex.Observer;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.Disposable;
-import io.reactivex.schedulers.Schedulers;
-import retrofit2.Retrofit;
-import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
-import retrofit2.converter.gson.GsonConverterFactory;
 
-public class ImpLoginModel implements LoginModel {
+public class ImpLoginModel extends BaseModel implements LoginModel {
     @Override
     public void getData(final LoginCallback loginCallback, String userName, String passWord) {
-        Retrofit retrofit = new Retrofit.Builder()
+        HttpManager.getHttpManager().getApiSeriver(ApiSercice.baseUrl, ApiSercice.class)
+                .login(userName, passWord)
+                .compose(RxUtil.observableTransformer())
+                .subscribe(new BaseObserver<LoginBean>(this) {
+                    @Override
+                    public void onSuccess(LoginBean loginBean) {
+                        int errorCode = loginBean.getErrorCode();
+                        if (errorCode == 0) {
+                            loginCallback.onSuccess(loginBean);
+                        } else {
+                            loginCallback.onFail(loginBean.getErrorMsg());
+                        }
+                    }
+
+                    @Override
+                    public void onFail(String error) {
+                        loginCallback.onFail(error);
+                    }
+                });
+        /*Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(ApiSercice.baseUrl)
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
@@ -50,6 +66,6 @@ public class ImpLoginModel implements LoginModel {
                     public void onComplete() {
 
                     }
-                });
+                });*/
     }
 }
